@@ -1,32 +1,3 @@
-<!-- Button trigger modal -->
-
-<nav class="navbar ">
-  <form class="form-inline" action="#" method="post">
-    <input class="form-control mr-sm-2" type="search"  id="search" placeholder="Search" autocomplete="off">
-  </form>
-<button type="button" class="btn btn-primary float-right mb-2" data-toggle="modal" data-target="#model">
-    Add Record
-</button>
-</nav>
-
-
-<script>
-
-$(document).on('keyup', function(e) {
-        var search = $('#search').val();
-    $.ajax({
-        url: "search.php",
-        type: "POST",
-        data: {search},
-        success: function(data) {
-            $('#display_record').html(data);
-        }
-    })
-});
-
-
-</script>
-
 <!-- Modal -->
 <div class="modal fade" id="model" tabindex="-1" aria-labelledby="add_emp" aria-hidden="true">
     <div class="modal-dialog">

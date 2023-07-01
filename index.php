@@ -25,8 +25,18 @@
     </div>
 
     <main>
-        <div class="container my-5 p-2">
+        <div class="container my-5">
             <!-- <h1>Dashboard</h1> -->
+            <div class="navbar">
+                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#model">
+                    Add Record
+                </button>
+                <form class="form-inline" action="#" method="post">
+                    <input class="form-control mr-sm-2" type="search" id="search_input" placeholder="Search"
+                        autocomplete="off">
+                </form>
+            </div>
+
             <?php include_once('add_model.php') ?>
             <div id="display_record">
                 hello data
@@ -91,76 +101,94 @@ $(document).ready(function() {
             }
         })
     });
-});
 
-// Delete the Record from the database
-$(document).on('click', '.delete_btn', function(e) {
-    var new_id = $(this).data("id");
-    $.ajax({
-        url: "delete.php",
-        type: "POST",
-        data: {
-            new_id
-        },
-        success: function(data) {
-            if (data == 1) {
-                $('#message').html('Data Deleted successfully').fadeIn(800);
-                $('#message').fadeOut(2000);
-                load_Record();
-            } else {
-                $('#message').addClass('alert-danger');
-                $('#message').html('something went wrong Data not Deleted!').fadeIn(800);
-                $('#message').fadeOut(2000);
+
+    // Delete the Record from the database
+    $(document).on('click', '.delete_btn', function(e) {
+        var new_id = $(this).data("id");
+        $.ajax({
+            url: "delete.php",
+            type: "POST",
+            data: {
+                new_id
+            },
+            success: function(data) {
+                if (data == 1) {
+                    $('#message').html('Data Deleted successfully').fadeIn(800);
+                    $('#message').fadeOut(2000);
+                    load_Record();
+                } else {
+                    $('#message').addClass('alert-danger');
+                    $('#message').html('something went wrong Data not Deleted!').fadeIn(
+                        800);
+                    $('#message').fadeOut(2000);
+                }
             }
-        }
-    })
-});
-
-
-// fetch data for update the table
-$(document).on('click', '.edit_btn', function(e) {
-    var fetch_id = $(this).data("id");
-    $.ajax({
-        type: "POST",
-        url: "fetch_data.php",
-        data: {
-            fetch_id
-        },
-        success: function(data) {
-            $("#fetch_form").html(data);
-        }
+        })
     });
-});
 
-// save record
-$("#update_record").on("click", function(e) {
-    e.preventDefault();
-    var update_id = $('#update_id').val();
-    var u_name = $('#u_name').val();
-    var u_address = $('#u_address').val();
-    var u_salary = $('#u_salary').val();
-    $.ajax({
-        url: "update.php",
-        type: "POST",
-        data: {
-            update_id,
-            u_name,
-            u_address,
-            u_salary,
-        },
-        success: function(data) {
-            if (data) {
-                $('#message').html('data updated successfully').fadeIn(800);
-                $('#message').fadeOut(2000);
-                document.location = "index.php";
-                load_Record();
-            } else {
-                $('#message').addClass('alert-danger');
-                $('#message').html('something went wrong, data not updated!').fadeIn(800);
-                $('#message').fadeOut(2000);
+    // fetch data for update the table
+    $(document).on('click', '.edit_btn', function(e) {
+        var fetch_id = $(this).data("id");
+        $.ajax({
+            type: "POST",
+            url: "fetch_data.php",
+            data: {
+                fetch_id
+            },
+            success: function(data) {
+                $("#fetch_form").html(data);
             }
-        }
-    })
+        });
+    });
+
+    // save record
+    $("#update_record").on("click", function(e) {
+        e.preventDefault();
+        var update_id = $('#update_id').val();
+        var u_name = $('#u_name').val();
+        var u_address = $('#u_address').val();
+        var u_salary = $('#u_salary').val();
+        $.ajax({
+            url: "update.php",
+            type: "POST",
+            data: {
+                update_id,
+                u_name,
+                u_address,
+                u_salary,
+            },
+            success: function(data) {
+                if (data) {
+                    $('#message').html('data updated successfully').fadeIn(800);
+                    $('#message').fadeOut(2000);
+                    document.location = "index.php";
+                    load_Record();
+                } else {
+                    $('#message').addClass('alert-danger');
+                    $('#message').html('something went wrong, data not updated!').fadeIn(
+                        800);
+                    $('#message').fadeOut(2000);
+                }
+            }
+        })
+    });
+
+    // Search records
+
+    $("#search_input").on('keyup', function(e) {
+        var search = $('#search_input').val();
+        $.ajax({
+            url: "search.php",
+            type: "POST",
+            data: {
+                search
+            },
+            success: function(data) {
+                $('#display_record').html(data);
+            }
+        })
+    });
 });
 </script>
 
