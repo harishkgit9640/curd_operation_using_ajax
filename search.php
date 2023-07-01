@@ -22,7 +22,7 @@ $search= $_POST['search'];
 <tbody>";
       while($row = mysqli_fetch_array($res)){
           $output .= "<tr>
-          <td>{$i}</td>
+          <td>{$row['id']}</td>
           <td>{$row['name']}</td>
           <td>{$row['address']}</td>
           <td>{$row['salary']}</td>

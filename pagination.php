@@ -1,7 +1,7 @@
 <?php
 include_once('db_config.php');
 
-$page_limit = 3;
+$page_limit = 2;
 $page = "";
 if(isset($_POST['page_id'])){
     $page = $_POST['page_id'];
@@ -47,16 +47,26 @@ if($count>0){
         $record = mysqli_num_rows($sql);
         $total_pages = ceil($record/$page_limit);
 
-        $output .= '<nav aria-label="pagination">
-        <ul class="pagination">';
-
-        $output .= "<li class='page-item disabled'><a href='' class='page-link' id='".($page-1)."' >Previous</a></li>";
-        
-        for ($i=1; $i <=$total_pages; $i++) { 
-            $output .= "<li class='page-item'><a href='' class='page-link' id='".$i."' >$i</a></li>";
+        $output .= '<nav aria-label="pagination"> <ul class="pagination">';
+        if($page >=2){
+            $output .= "<li class='page-item'><a href='' class='page-link' id='".($page-1)."' >Previous</a></li>";
+        }else{
+            $output .= "<li class='page-item disabled'><a href='' class='page-link' id='".($page-1)."' >Previous</a></li>";
         }
         
-        $output .= "<li class='page-item disabled'><a href='' class='page-link' id='".($page+1)."' >Next</a></li>";
+        for ($i=1; $i <=$total_pages; $i++) { 
+            if($page == $i) {
+            $output .= "<li class='page-item active'><a href='' class='page-link' id='".$i."' >$i</a></li>";
+        }else{
+                $output .= "<li class='page-item '><a href='' class='page-link' id='".$i."' >$i</a></li>";
+            }
+        }
+        
+        if($page >=$total_pages){
+            $output .= "<li class='page-item disabled'><a href='' class='page-link' id='".($page+1)."' >Next</a></li>";
+        }else{
+            $output .= "<li class='page-item '><a href='' class='page-link' id='".($page+1)."' >Next</a></li>";
+        }
 
         $output .= "</ul></nav>";
 
