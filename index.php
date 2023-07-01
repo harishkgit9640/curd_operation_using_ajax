@@ -31,6 +31,12 @@
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#model">
                     Add Record
                 </button>
+
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="theme">
+                    <label class="custom-control-label" for="theme">Mode</label>
+                </div>
+
                 <form class="form-inline" action="#" method="post">
                     <input class="form-control mr-sm-2" type="search" id="search_input" placeholder="Search"
                         autocomplete="off">
